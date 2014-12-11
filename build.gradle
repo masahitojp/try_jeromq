@@ -1,0 +1,40 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+ 
+group = 'me.masahito'
+version = "0.1.0-SNAPSHOT"
+sourceCompatibility = targetCompatibility = '1.8'
+repositories.mavenCentral()
+ 
+configurations {
+provided
+}
+
+idea {
+  project {
+    jdkName = '1.8'
+    languageLevel = '1.8'
+  }
+  module {
+    scopes.PROVIDED.plus += [configurations.provided]
+  }
+}
+sourceSets {
+  main {
+    compileClasspath += configurations.provided
+  }
+  test {
+    compileClasspath += configurations.provided
+    runtimeClasspath += configurations.provided
+  }
+}
+ 
+dependencies {
+  compile 'io.reactivex:rxjava:1.0.2'
+  compile 'org.zeromq:jeromq:0.3.4'
+  compile "org.msgpack:msgpack-core:0.7.0-p2"
+  compile 'org.slf4j:slf4j-api:1.7.7'
+  compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.+'
+  provided "org.projectlombok:lombok:1.14.8"
+  testCompile 'junit:junit:4.11'
+} 
